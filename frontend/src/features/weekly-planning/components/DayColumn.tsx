@@ -1,9 +1,7 @@
 import type { Task } from '@/features/weekly-planning/types'
 import TaskCard from './TaskCard'
 
-const DAY_NAMES = [
-  'Dom', 'Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb',
-] as const
+const DAY_NAMES = ['Dom', 'Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb'] as const
 
 interface Props {
   date: string
@@ -12,12 +10,7 @@ interface Props {
   onTaskChange: () => void
 }
 
-export default function DayColumn({
-  date,
-  tasks,
-  onAddTask,
-  onTaskChange,
-}: Props) {
+export default function DayColumn({ date, tasks, onAddTask, onTaskChange }: Props) {
   const d = new Date(`${date}T12:00:00`)
   const dayName = DAY_NAMES[d.getDay()] ?? ''
   const dayNumber = d.getDate()
@@ -30,18 +23,14 @@ export default function DayColumn({
   })
 
   return (
-    <div className="min-w-[80vw] snap-start flex-shrink-0 px-3 pb-6">
+    <div className="min-w-[80vw] flex-shrink-0 snap-start px-3 pb-6">
       <div className="mb-3">
-        <p className="text-xs font-semibold text-gray-400 uppercase tracking-wider">
-          {dayName}
-        </p>
-        <p className="text-2xl font-bold text-gray-900 leading-none mt-0.5">
-          {dayNumber}
-        </p>
+        <p className="text-xs font-semibold tracking-wider text-gray-400 uppercase">{dayName}</p>
+        <p className="mt-0.5 text-2xl leading-none font-bold text-gray-900">{dayNumber}</p>
       </div>
 
       <div className="space-y-2">
-        {sortedTasks.map((task) => (
+        {sortedTasks.map(task => (
           <TaskCard
             key={task.id}
             task={task}
@@ -53,7 +42,7 @@ export default function DayColumn({
 
       <button
         onClick={() => onAddTask(date)}
-        className="mt-3 w-full min-h-[44px] flex items-center justify-center gap-1 text-sm text-gray-400 border border-dashed border-gray-200 rounded-lg hover:text-gray-600 hover:border-gray-300 touch-manipulation"
+        className="mt-3 flex min-h-[44px] w-full touch-manipulation items-center justify-center gap-1 rounded-lg border border-dashed border-gray-200 text-sm text-gray-400 hover:border-gray-300 hover:text-gray-600"
       >
         + Añadir
       </button>

@@ -12,5 +12,5 @@ createRoot(rootEl).render(
     <BrowserRouter>
       <App />
     </BrowserRouter>
-  </StrictMode>,
+  </StrictMode>
 )

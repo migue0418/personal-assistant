@@ -5,16 +5,16 @@ export default {
       2,
       'always',
       [
-        'feat',     // nueva funcionalidad
-        'fix',      // corrección de bug
-        'chore',    // tareas de mantenimiento (deps, config)
+        'feat', // nueva funcionalidad
+        'fix', // corrección de bug
+        'chore', // tareas de mantenimiento (deps, config)
         'refactor', // refactorización sin cambio de comportamiento
-        'style',    // cambios de formato/estilos CSS
-        'test',     // tests
-        'docs',     // documentación
-        'perf',     // mejoras de rendimiento
-        'ci',       // cambios en CI/CD
-        'revert',   // revert de commit anterior
+        'style', // cambios de formato/estilos CSS
+        'test', // tests
+        'docs', // documentación
+        'perf', // mejoras de rendimiento
+        'ci', // cambios en CI/CD
+        'revert', // revert de commit anterior
       ],
     ],
     'subject-case': [2, 'always', 'lower-case'],

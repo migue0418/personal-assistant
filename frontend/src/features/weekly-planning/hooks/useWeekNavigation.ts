@@ -27,21 +27,12 @@ export function useWeekNavigation() {
 
   const weekDates = useMemo(
     () => Array.from({ length: 7 }, (_, i) => addDays(weekStart, i)),
-    [weekStart],
+    [weekStart]
   )
 
-  const goToPrevWeek = useCallback(
-    () => setWeekStart((s) => addDays(s, -7)),
-    [],
-  )
-  const goToNextWeek = useCallback(
-    () => setWeekStart((s) => addDays(s, 7)),
-    [],
-  )
-  const goToCurrentWeek = useCallback(
-    () => setWeekStart(getMondayOf(new Date())),
-    [],
-  )
+  const goToPrevWeek = useCallback(() => setWeekStart(s => addDays(s, -7)), [])
+  const goToNextWeek = useCallback(() => setWeekStart(s => addDays(s, 7)), [])
+  const goToCurrentWeek = useCallback(() => setWeekStart(getMondayOf(new Date())), [])
 
   return {
     weekStart,

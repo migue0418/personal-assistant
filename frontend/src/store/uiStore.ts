@@ -7,9 +7,9 @@ interface UIStore {
   toggleSidebar: () => void
 }
 
-export const useUIStore = create<UIStore>((set) => ({
+export const useUIStore = create<UIStore>(set => ({
   selectedDate: new Date().toISOString().substring(0, 10),
-  setSelectedDate: (date) => set({ selectedDate: date }),
+  setSelectedDate: date => set({ selectedDate: date }),
   isSidebarOpen: false,
-  toggleSidebar: () => set((s) => ({ isSidebarOpen: !s.isSidebarOpen })),
+  toggleSidebar: () => set(s => ({ isSidebarOpen: !s.isSidebarOpen })),
 }))

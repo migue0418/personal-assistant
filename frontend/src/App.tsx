@@ -3,7 +3,7 @@ import WeeklyPlanningPage from '@/features/weekly-planning/components/WeeklyPlan
 
 function NotFound() {
   return (
-    <div className="flex items-center justify-center h-full text-gray-400 text-sm">
+    <div className="flex h-full items-center justify-center text-sm text-gray-400">
       404 — Página no encontrada
     </div>
   )

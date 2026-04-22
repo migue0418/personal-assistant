@@ -20,29 +20,24 @@ function formatWeekRange(weekStart: string): string {
   return `${startDay} – ${endStr}`
 }
 
-export default function WeekHeader({
-  weekStart,
-  onPrev,
-  onNext,
-  onToday,
-}: Props) {
+export default function WeekHeader({ weekStart, onPrev, onNext, onToday }: Props) {
   return (
-    <header className="flex items-center justify-between px-2 py-2 border-b border-gray-100 bg-white sticky top-0 z-10">
+    <header className="sticky top-0 z-10 flex items-center justify-between border-b border-gray-100 bg-white px-2 py-2">
       <button
         onClick={onPrev}
-        className="min-w-[44px] min-h-[44px] flex items-center justify-center text-xl text-gray-500 hover:bg-gray-100 rounded-lg touch-manipulation"
+        className="flex min-h-[44px] min-w-[44px] touch-manipulation items-center justify-center rounded-lg text-xl text-gray-500 hover:bg-gray-100"
         aria-label="Semana anterior"
       >
         ‹
       </button>
 
       <div className="text-center">
-        <p className="text-sm font-semibold text-gray-900 leading-tight">
+        <p className="text-sm leading-tight font-semibold text-gray-900">
           {formatWeekRange(weekStart)}
         </p>
         <button
           onClick={onToday}
-          className="text-xs text-slate-400 hover:text-slate-600 touch-manipulation min-h-[44px] px-3 flex items-center"
+          className="flex min-h-[44px] touch-manipulation items-center px-3 text-xs text-slate-400 hover:text-slate-600"
         >
           Hoy
         </button>
@@ -50,7 +45,7 @@ export default function WeekHeader({
 
       <button
         onClick={onNext}
-        className="min-w-[44px] min-h-[44px] flex items-center justify-center text-xl text-gray-500 hover:bg-gray-100 rounded-lg touch-manipulation"
+        className="flex min-h-[44px] min-w-[44px] touch-manipulation items-center justify-center rounded-lg text-xl text-gray-500 hover:bg-gray-100"
         aria-label="Semana siguiente"
       >
         ›

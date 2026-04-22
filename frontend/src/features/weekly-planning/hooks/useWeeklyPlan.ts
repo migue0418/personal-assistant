@@ -4,9 +4,7 @@ import type { Task, WeeklyPlan } from '@/features/weekly-planning/types'
 
 export function useWeeklyPlan(weekStart: string) {
   const [plan, setPlan] = useState<WeeklyPlan | null>(null)
-  const [tasksByDate, setTasksByDate] = useState<
-    Record<string, Task[] | undefined>
-  >({})
+  const [tasksByDate, setTasksByDate] = useState<Record<string, Task[] | undefined>>({})
   const [isLoading, setIsLoading] = useState(true)
   const [error, setError] = useState<Error | null>(null)
   const [refreshToken, setRefreshToken] = useState(0)
@@ -14,12 +12,11 @@ export function useWeeklyPlan(weekStart: string) {
   useEffect(() => {
     let cancelled = false
 
-    setIsLoading(true)
-    setError(null)
-    setPlan(null)
-    setTasksByDate({})
-
     const run = async () => {
+      setIsLoading(true)
+      setError(null)
+      setPlan(null)
+      setTasksByDate({})
       try {
         const p = await planningRepo.getOrCreateWeekPlan(weekStart)
         if (cancelled) return
@@ -37,8 +34,7 @@ export function useWeeklyPlan(weekStart: string) {
         setPlan(p)
         setTasksByDate(grouped)
       } catch (e) {
-        if (!cancelled)
-          setError(e instanceof Error ? e : new Error(String(e)))
+        if (!cancelled) setError(e instanceof Error ? e : new Error(String(e)))
       } finally {
         if (!cancelled) setIsLoading(false)
       }
@@ -50,7 +46,7 @@ export function useWeeklyPlan(weekStart: string) {
     }
   }, [weekStart, refreshToken])
 
-  const refresh = useCallback(() => setRefreshToken((t) => t + 1), [])
+  const refresh = useCallback(() => setRefreshToken(t => t + 1), [])
 
   return { plan, tasksByDate, isLoading, error, refresh }
 }
