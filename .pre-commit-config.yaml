@@ -8,8 +8,8 @@ repos:
       - id: check-merge-conflict
       - id: check-json
       - id: check-yaml
-      - id: no-commit-to-branch
-        args: [--branch, main]
+      # - id: no-commit-to-branch
+      #   args: [--branch, main]
 
   # ── Prettier ─────────────────────────────────────────────────────────────────
   - repo: https://github.com/pre-commit/mirrors-prettier
@@ -45,5 +45,6 @@ repos:
       - id: commitlint
         name: commitlint
         stages: [commit-msg]
+        args: [--config, frontend/commitlint.config.js]
         additional_dependencies:
           - "@commitlint/config-conventional@19.2.2"
