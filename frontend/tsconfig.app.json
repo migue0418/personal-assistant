@@ -1,0 +1,44 @@
+{
+  "compilerOptions": {
+    // ── Target ────────────────────────────────────────────────────────────────
+    "target": "ES2022",
+    "lib": ["ES2022", "DOM", "DOM.Iterable"],
+    "module": "ESNext",
+    "moduleResolution": "Bundler",
+    "moduleDetection": "force",
+
+    // ── React ─────────────────────────────────────────────────────────────────
+    "jsx": "react-jsx",
+
+    // ── Strict mode completo ──────────────────────────────────────────────────
+    "strict": true,
+    "noUncheckedIndexedAccess": true,
+    "noImplicitOverride": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noFallthroughCasesInSwitch": true,
+    "exactOptionalPropertyTypes": true,
+
+    // ── Interop ───────────────────────────────────────────────────────────────
+    "esModuleInterop": true,
+    "isolatedModules": true,
+    "verbatimModuleSyntax": true,
+    "resolveJsonModule": true,
+    "allowImportingTsExtensions": true,
+
+    // ── Output ────────────────────────────────────────────────────────────────
+    // Vite se encarga del emit, TS solo chequea tipos
+    "noEmit": true,
+    "skipLibCheck": true,
+
+    // ── Path alias (@/ → src/) ────────────────────────────────────────────────
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["src/*"]
+    },
+
+    // ── Suppress TS6 deprecation warnings ────────────────────────────────────
+    "ignoreDeprecations": "6.0"
+  },
+  "include": ["src"]
+}

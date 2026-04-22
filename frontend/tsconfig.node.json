@@ -1,0 +1,24 @@
+{
+  "compilerOptions": {
+    // ── Target ────────────────────────────────────────────────────────────────
+    "target": "ES2022",
+    "lib": ["ES2022"],
+    "module": "ESNext",
+    "moduleResolution": "Bundler",
+
+    // ── Strict ────────────────────────────────────────────────────────────────
+    "strict": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+
+    // ── Interop ───────────────────────────────────────────────────────────────
+    "esModuleInterop": true,
+    "isolatedModules": true,
+    "verbatimModuleSyntax": true,
+
+    // ── Output ────────────────────────────────────────────────────────────────
+    "noEmit": true,
+    "skipLibCheck": true
+  },
+  "include": ["vite.config.ts", "commitlint.config.js"]
+}
