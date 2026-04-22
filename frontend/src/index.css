@@ -1,5 +1,37 @@
 @import 'tailwindcss';
 
+:root {
+  /* Brand */
+  --color-primary: #1a73e8;
+  --color-primary-light: #c2e7ff;
+
+  /* Texto */
+  --color-text-primary: #202124;
+  --color-text-secondary: #70757a;
+  --color-text-disabled: #bdc1c6;
+
+  /* Superficies */
+  --color-surface: #ffffff;
+  --color-surface-variant: #f1f3f4;
+  --color-border: #e0e0e0;
+
+  /* Calendario */
+  --color-today: #1a73e8;
+  --color-current-time: #d93025;
+  --color-grid-line: #f1f3f4;
+  --color-grid-line-half: #f8f9fa;
+
+  /* Categorías de eventos */
+  --color-event-work: #1a73e8;
+  --color-event-personal: #a142f4;
+  --color-event-health: #d93025;
+  --color-event-shopping: #e8710a;
+  --color-event-other: #70757a;
+
+  /* Estado completado */
+  --color-done-opacity: 0.45;
+}
+
 html,
 body,
 #root {

@@ -16,3 +16,4 @@ backend/.env
 .claude/
 docs/
 CLAUDE.md
+.superpowers/

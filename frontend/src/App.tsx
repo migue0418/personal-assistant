@@ -1,5 +1,5 @@
 import { Routes, Route, Navigate } from 'react-router-dom'
-import WeeklyPlanningPage from '@/features/weekly-planning/components/WeeklyPlanningPage'
+import CalendarPage from '@/features/weekly-planning/components/CalendarPage'
 
 function NotFound() {
   return (
@@ -13,7 +13,7 @@ export default function App() {
   return (
     <Routes>
       <Route path="/" element={<Navigate to="/planning" replace />} />
-      <Route path="/planning" element={<WeeklyPlanningPage />} />
+      <Route path="/planning" element={<CalendarPage />} />
       <Route path="*" element={<NotFound />} />
     </Routes>
   )
