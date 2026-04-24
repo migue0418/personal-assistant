@@ -2,7 +2,8 @@
 import { useState, useEffect, useRef } from 'react'
 import { productsRepo } from '@/db/repositories/productsRepo'
 import { shoppingRepo } from '@/db/repositories/shoppingRepo'
-import type { Product } from '@/features/products/types'
+
+type ProductSuggestion = Awaited<ReturnType<typeof productsRepo.searchProducts>>[number]
 
 interface Props {
   listId: number
@@ -11,7 +12,7 @@ interface Props {
 
 export default function AddItemSearch({ listId, onItemAdded }: Props) {
   const [query, setQuery] = useState('')
-  const [results, setResults] = useState<Product[]>([])
+  const [results, setResults] = useState<ProductSuggestion[]>([])
   const [showDropdown, setShowDropdown] = useState(false)
   const inputRef = useRef<HTMLInputElement>(null)
 
@@ -26,7 +27,7 @@ export default function AddItemSearch({ listId, onItemAdded }: Props) {
 
   const hasExactMatch = results.some(p => p.name.toLowerCase() === query.trim().toLowerCase())
 
-  async function selectProduct(product: Product) {
+  async function selectProduct(product: ProductSuggestion) {
     await shoppingRepo.addItem({
       listId,
       ...(product.id !== undefined ? { productId: product.id } : {}),
