@@ -9,6 +9,7 @@ import AllDayRow from './AllDayRow'
 import TimeGrid from './TimeGrid'
 import CreateEventModal from './CreateEventModal'
 import DeleteRecurringModal from './DeleteRecurringModal'
+import TopBar from '@/shared/components/TopBar'
 
 function toISODate(date: Date): string {
   const y = date.getFullYear()
@@ -98,6 +99,7 @@ export default function CalendarPage() {
       className="flex h-full flex-col overflow-hidden"
       style={{ backgroundColor: 'var(--color-surface)' }}
     >
+      <TopBar title="Calendario" />
       <CalendarHeader
         selectedDate={selectedDate}
         onPrev={handlePrevWeek}
