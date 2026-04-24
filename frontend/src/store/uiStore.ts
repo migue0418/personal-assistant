@@ -1,3 +1,4 @@
+// frontend/src/store/uiStore.ts
 import { create } from 'zustand'
 
 interface UIStore {
@@ -5,6 +6,7 @@ interface UIStore {
   setSelectedDate: (date: string) => void
   isSidebarOpen: boolean
   toggleSidebar: () => void
+  closeSidebar: () => void
 }
 
 export const useUIStore = create<UIStore>(set => ({
@@ -12,4 +14,5 @@ export const useUIStore = create<UIStore>(set => ({
   setSelectedDate: date => set({ selectedDate: date }),
   isSidebarOpen: false,
   toggleSidebar: () => set(s => ({ isSidebarOpen: !s.isSidebarOpen })),
+  closeSidebar: () => set({ isSidebarOpen: false }),
 }))
