@@ -17,7 +17,8 @@ export default function AddItemSearch({ listId, onItemAdded }: Props) {
 
   useEffect(() => {
     if (!query.trim()) {
-      void Promise.resolve().then(() => setResults([]))
+      // eslint-disable-next-line react-hooks/set-state-in-effect
+      setResults([])
       return
     }
     void productsRepo.searchProducts(query).then(setResults)
