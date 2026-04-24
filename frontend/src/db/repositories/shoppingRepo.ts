@@ -27,6 +27,6 @@ export const shoppingRepo = {
 
   uncheckAllItems: async (listId: number): Promise<void> => {
     const items = await db.shoppingItems.where('listId').equals(listId).toArray()
-    await Promise.all(items.map(item => db.shoppingItems.update(item.id, { checked: false })))
+    await Promise.all(items.map(item => db.shoppingItems.update(item.id!, { checked: false })))
   },
 }
