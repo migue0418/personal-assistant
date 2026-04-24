@@ -11,6 +11,7 @@ backend/.env
 # General
 .DS_Store
 *.log
+.worktrees/
 
 # CLAUDE
 .claude/
