@@ -153,33 +153,49 @@ export default function CreateEventModal({ date, planId, initialTime, onSave, on
         role="dialog"
         aria-modal="true"
         aria-labelledby="create-event-title"
-        className="max-h-[90vh] w-full overflow-y-auto rounded-t-2xl p-6"
-        style={{ backgroundColor: 'var(--color-surface)' }}
+        className="max-h-[96vh] w-full overflow-y-auto rounded-t-2xl"
+        style={{ backgroundColor: 'var(--color-surface-variant)' }}
         onClick={e => e.stopPropagation()}
       >
-        {/* Handle */}
-        <div
-          className="mx-auto mb-4 h-1 w-10 rounded-full"
-          style={{ backgroundColor: 'var(--color-border)' }}
-        />
+        {/* Nav bar */}
+        <div className="flex items-center justify-between px-4 pt-4 pb-2">
+          <button
+            type="button"
+            onClick={onClose}
+            disabled={saving}
+            className="min-w-[72px] text-[17px] disabled:opacity-40"
+            style={{ color: 'var(--color-primary)' }}
+          >
+            Cancelar
+          </button>
+          <h2
+            id="create-event-title"
+            className="text-[15px] font-semibold"
+            style={{ color: 'var(--color-text-primary)' }}
+          >
+            Nuevo evento
+          </h2>
+          <button
+            type="submit"
+            form="create-event-form"
+            disabled={saving}
+            className="min-w-[72px] text-right text-[17px] font-semibold disabled:opacity-40"
+            style={{ color: 'var(--color-primary)' }}
+          >
+            {saving ? 'Guardando…' : 'Guardar'}
+          </button>
+        </div>
 
-        <h2
-          id="create-event-title"
-          className="mb-4 text-lg font-semibold"
-          style={{ color: 'var(--color-text-primary)' }}
+        <form
+          id="create-event-form"
+          onSubmit={e => void handleSubmit(e)}
+          className="space-y-3 px-4 pb-8"
         >
-          Nuevo evento
-        </h2>
-
-        <form onSubmit={e => void handleSubmit(e)} className="space-y-4">
-          <div>
-            <label
-              htmlFor="event-title"
-              className="mb-1 block text-sm font-medium"
-              style={{ color: 'var(--color-text-primary)' }}
-            >
-              Título *
-            </label>
+          {/* Card 1: Título */}
+          <div
+            className="overflow-hidden rounded-xl"
+            style={{ backgroundColor: 'var(--color-surface)' }}
+          >
             <input
               id="event-title"
               type="text"
@@ -188,44 +204,50 @@ export default function CreateEventModal({ date, planId, initialTime, onSave, on
                 setTitle(e.target.value)
                 if (titleError) setTitleError('')
               }}
-              placeholder="¿Qué hay que hacer?"
-              className="w-full rounded-lg border px-3 py-2.5 text-sm focus:ring-2 focus:outline-none"
-              style={{
-                borderColor: 'var(--color-border)',
-                color: 'var(--color-text-primary)',
-              }}
+              placeholder="Título"
+              className="w-full bg-transparent px-4 py-3.5 text-[17px] outline-none"
+              style={{ color: 'var(--color-text-primary)' }}
               autoFocus
             />
-            {titleError && (
-              <p className="mt-1 text-xs" style={{ color: 'var(--color-current-time)' }}>
-                {titleError}
-              </p>
-            )}
           </div>
+          {titleError && (
+            <p className="px-1 text-xs" style={{ color: 'var(--color-current-time)' }}>
+              {titleError}
+            </p>
+          )}
 
-          <div>
-            <label
-              htmlFor="event-date"
-              className="mb-1 block text-sm font-medium"
-              style={{ color: 'var(--color-text-primary)' }}
+          {/* Card 2: Fecha y hora */}
+          <div
+            className="overflow-hidden rounded-xl"
+            style={{ backgroundColor: 'var(--color-surface)' }}
+          >
+            <div
+              className="flex min-h-[52px] items-center justify-between border-b px-4"
+              style={{ borderColor: 'var(--color-border)' }}
             >
-              Fecha
-            </label>
-            <input
-              id="event-date"
-              type="date"
-              value={taskDate}
-              onChange={e => setTaskDate(e.target.value)}
-              className="w-full rounded-lg border px-3 py-2.5 text-sm focus:outline-none"
-              style={{ borderColor: 'var(--color-border)', color: 'var(--color-text-primary)' }}
-            />
-          </div>
-
-          <div className="flex gap-3">
-            <div className="flex-1">
+              <label
+                htmlFor="event-date"
+                className="text-[17px]"
+                style={{ color: 'var(--color-text-primary)' }}
+              >
+                Fecha
+              </label>
+              <input
+                id="event-date"
+                type="date"
+                value={taskDate}
+                onChange={e => setTaskDate(e.target.value)}
+                className="bg-transparent text-right text-[17px] outline-none"
+                style={{ color: 'var(--color-text-secondary)' }}
+              />
+            </div>
+            <div
+              className="flex min-h-[52px] items-center justify-between border-b px-4"
+              style={{ borderColor: 'var(--color-border)' }}
+            >
               <label
                 htmlFor="event-time-start"
-                className="mb-1 block text-sm font-medium"
+                className="text-[17px]"
                 style={{ color: 'var(--color-text-primary)' }}
               >
                 Inicio
@@ -238,14 +260,14 @@ export default function CreateEventModal({ date, planId, initialTime, onSave, on
                   setTimeStart(e.target.value)
                   if (timeError) setTimeError('')
                 }}
-                className="w-full rounded-lg border px-3 py-2.5 text-sm focus:outline-none"
-                style={{ borderColor: 'var(--color-border)', color: 'var(--color-text-primary)' }}
+                className="bg-transparent text-right text-[17px] outline-none"
+                style={{ color: 'var(--color-text-secondary)' }}
               />
             </div>
-            <div className="flex-1">
+            <div className="flex min-h-[52px] items-center justify-between px-4">
               <label
                 htmlFor="event-time-end"
-                className="mb-1 block text-sm font-medium"
+                className="text-[17px]"
                 style={{ color: 'var(--color-text-primary)' }}
               >
                 Fin
@@ -258,76 +280,106 @@ export default function CreateEventModal({ date, planId, initialTime, onSave, on
                   setTimeEnd(e.target.value)
                   if (timeError) setTimeError('')
                 }}
-                className="w-full rounded-lg border px-3 py-2.5 text-sm focus:outline-none"
-                style={{ borderColor: 'var(--color-border)', color: 'var(--color-text-primary)' }}
+                className="bg-transparent text-right text-[17px] outline-none"
+                style={{ color: 'var(--color-text-secondary)' }}
               />
             </div>
           </div>
           {timeError && (
-            <p className="-mt-2 text-xs" style={{ color: 'var(--color-current-time)' }}>
+            <p className="px-1 text-xs" style={{ color: 'var(--color-current-time)' }}>
               {timeError}
             </p>
           )}
 
-          <div>
-            <label
-              htmlFor="event-category"
-              className="mb-1 block text-sm font-medium"
-              style={{ color: 'var(--color-text-primary)' }}
-            >
-              Categoría
-            </label>
-            <select
-              id="event-category"
-              value={category}
-              onChange={e => setCategory(e.target.value as TaskCategory | '')}
-              className="w-full rounded-lg border px-3 py-2.5 text-sm focus:outline-none"
-              style={{ borderColor: 'var(--color-border)', color: 'var(--color-text-primary)' }}
-            >
-              <option value="">Sin categoría</option>
-              {CATEGORIES.map(c => (
-                <option key={c} value={c}>
-                  {CATEGORY_LABELS[c]}
-                </option>
-              ))}
-            </select>
+          {/* Card 3: Categoría */}
+          <div
+            className="overflow-hidden rounded-xl"
+            style={{ backgroundColor: 'var(--color-surface)' }}
+          >
+            <div className="flex min-h-[52px] items-center justify-between px-4">
+              <label
+                htmlFor="event-category"
+                className="text-[17px]"
+                style={{ color: 'var(--color-text-primary)' }}
+              >
+                Categoría
+              </label>
+              <select
+                id="event-category"
+                value={category}
+                onChange={e => setCategory(e.target.value as TaskCategory | '')}
+                className="appearance-none bg-transparent text-right text-[17px] outline-none"
+                style={{ color: 'var(--color-text-secondary)' }}
+              >
+                <option value="">Sin categoría</option>
+                {CATEGORIES.map(c => (
+                  <option key={c} value={c}>
+                    {CATEGORY_LABELS[c]}
+                  </option>
+                ))}
+              </select>
+            </div>
           </div>
 
-          <div className="border-t pt-4" style={{ borderColor: 'var(--color-border)' }}>
+          {/* Card 4: Recordatorios */}
+          <p
+            className="px-1 text-xs font-semibold tracking-wider uppercase"
+            style={{ color: 'var(--color-text-secondary)' }}
+          >
+            Recordatorios
+          </p>
+          <div
+            className="overflow-hidden rounded-xl"
+            style={{ backgroundColor: 'var(--color-surface)' }}
+          >
             <ReminderPicker
               selected={reminderOffsets}
               hasTimeStart={timeStart.length > 0}
               onChange={setReminderOffsets}
             />
           </div>
+          {isRecurring && (
+            <p className="px-1 text-xs" style={{ color: 'var(--color-text-secondary)' }}>
+              Los recordatorios no están disponibles para tareas recurrentes.
+            </p>
+          )}
 
-          <div className="border-t pt-4" style={{ borderColor: 'var(--color-border)' }}>
-            <label className="flex cursor-pointer items-center gap-3">
-              <input
-                type="checkbox"
-                checked={isRecurring}
-                onChange={e => {
-                  setIsRecurring(e.target.checked)
-                  setRecurrenceError('')
-                }}
-                className="h-4 w-4"
-                style={{ accentColor: 'var(--color-primary)' }}
-              />
-              <span className="text-sm font-medium" style={{ color: 'var(--color-text-primary)' }}>
+          {/* Card 5: Se repite */}
+          <div
+            className="overflow-hidden rounded-xl"
+            style={{ backgroundColor: 'var(--color-surface)' }}
+          >
+            <div className="flex min-h-[52px] items-center justify-between px-4">
+              <span className="text-[17px]" style={{ color: 'var(--color-text-primary)' }}>
                 Se repite
               </span>
-            </label>
+              {/* iOS-style toggle switch */}
+              <button
+                type="button"
+                role="switch"
+                aria-checked={isRecurring}
+                aria-label="Se repite"
+                onClick={() => {
+                  setIsRecurring(!isRecurring)
+                  setRecurrenceError('')
+                }}
+                className="relative h-[31px] w-[51px] flex-shrink-0 rounded-full transition-colors duration-200"
+                style={{ backgroundColor: isRecurring ? 'var(--color-primary)' : '#E5E5EA' }}
+              >
+                <span
+                  className="absolute top-[2px] left-[2px] h-[27px] w-[27px] rounded-full bg-white shadow-sm transition-transform duration-200"
+                  style={{ transform: isRecurring ? 'translateX(20px)' : 'translateX(0)' }}
+                />
+              </button>
+            </div>
 
             {isRecurring && (
-              <div className="mt-3 space-y-3 pl-1">
-                <p className="text-xs" style={{ color: 'var(--color-text-secondary)' }}>
-                  Los recordatorios no están disponibles para tareas recurrentes.
-                </p>
-                <div>
+              <>
+                <div className="border-t px-4 py-3" style={{ borderColor: 'var(--color-border)' }}>
                   <label
                     htmlFor="recurrence-frequency"
-                    className="mb-1 block text-sm font-medium"
-                    style={{ color: 'var(--color-text-primary)' }}
+                    className="mb-2 block text-sm font-medium"
+                    style={{ color: 'var(--color-text-secondary)' }}
                   >
                     Frecuencia
                   </label>
@@ -335,7 +387,7 @@ export default function CreateEventModal({ date, planId, initialTime, onSave, on
                     id="recurrence-frequency"
                     value={frequency}
                     onChange={e => setFrequency(e.target.value as RecurrenceFrequency)}
-                    className="w-full rounded-lg border px-3 py-2.5 text-sm focus:outline-none"
+                    className="w-full rounded-lg border px-3 py-2 text-sm outline-none"
                     style={{
                       borderColor: 'var(--color-border)',
                       color: 'var(--color-text-primary)',
@@ -352,10 +404,13 @@ export default function CreateEventModal({ date, planId, initialTime, onSave, on
                 </div>
 
                 {frequency === 'custom' && (
-                  <div>
+                  <div
+                    className="border-t px-4 py-3"
+                    style={{ borderColor: 'var(--color-border)' }}
+                  >
                     <p
                       className="mb-2 text-sm font-medium"
-                      style={{ color: 'var(--color-text-primary)' }}
+                      style={{ color: 'var(--color-text-secondary)' }}
                     >
                       Días
                     </p>
@@ -366,6 +421,7 @@ export default function CreateEventModal({ date, planId, initialTime, onSave, on
                           <button
                             key={value}
                             type="button"
+                            aria-pressed={active}
                             onClick={() => {
                               setCustomDays(prev =>
                                 active ? prev.filter(d => d !== value) : [...prev, value]
@@ -393,10 +449,10 @@ export default function CreateEventModal({ date, planId, initialTime, onSave, on
                   </div>
                 )}
 
-                <div>
+                <div className="border-t px-4 py-3" style={{ borderColor: 'var(--color-border)' }}>
                   <p
                     className="mb-2 text-sm font-medium"
-                    style={{ color: 'var(--color-text-primary)' }}
+                    style={{ color: 'var(--color-text-secondary)' }}
                   >
                     Finaliza
                   </p>
@@ -426,7 +482,7 @@ export default function CreateEventModal({ date, planId, initialTime, onSave, on
                           setRecurrenceError('')
                         }}
                         disabled={endType !== 'count'}
-                        className="w-16 rounded-lg border px-2 py-1.5 text-sm focus:outline-none disabled:opacity-40"
+                        className="w-16 rounded-lg border px-2 py-1.5 text-sm outline-none disabled:opacity-40"
                         style={{
                           borderColor: 'var(--color-border)',
                           color: 'var(--color-text-primary)',
@@ -436,7 +492,6 @@ export default function CreateEventModal({ date, planId, initialTime, onSave, on
                         veces
                       </span>
                     </label>
-
                     <label className="flex cursor-pointer items-center gap-3">
                       <input
                         type="radio"
@@ -461,7 +516,7 @@ export default function CreateEventModal({ date, planId, initialTime, onSave, on
                           setRecurrenceError('')
                         }}
                         disabled={endType !== 'date'}
-                        className="flex-1 rounded-lg border px-2 py-1.5 text-sm focus:outline-none disabled:opacity-40"
+                        className="flex-1 rounded-lg border px-2 py-1.5 text-sm outline-none disabled:opacity-40"
                         style={{
                           borderColor: 'var(--color-border)',
                           color: 'var(--color-text-primary)',
@@ -472,35 +527,17 @@ export default function CreateEventModal({ date, planId, initialTime, onSave, on
                 </div>
 
                 {recurrenceError && (
-                  <p className="text-xs" style={{ color: 'var(--color-current-time)' }}>
-                    {recurrenceError}
-                  </p>
+                  <div
+                    className="border-t px-4 py-3"
+                    style={{ borderColor: 'var(--color-border)' }}
+                  >
+                    <p className="text-xs" style={{ color: 'var(--color-current-time)' }}>
+                      {recurrenceError}
+                    </p>
+                  </div>
                 )}
-              </div>
+              </>
             )}
-          </div>
-
-          <div className="flex gap-3 pt-2">
-            <button
-              type="button"
-              onClick={onClose}
-              disabled={saving}
-              className="min-h-[44px] flex-1 rounded-lg border text-sm font-medium disabled:opacity-50"
-              style={{
-                borderColor: 'var(--color-border)',
-                color: 'var(--color-text-primary)',
-              }}
-            >
-              Cancelar
-            </button>
-            <button
-              type="submit"
-              disabled={saving}
-              className="min-h-[44px] flex-1 rounded-lg text-sm font-medium text-white disabled:opacity-50"
-              style={{ backgroundColor: 'var(--color-primary)' }}
-            >
-              {saving ? 'Guardando…' : 'Guardar'}
-            </button>
           </div>
         </form>
       </div>
