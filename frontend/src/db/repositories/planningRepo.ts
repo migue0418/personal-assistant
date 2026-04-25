@@ -1,4 +1,5 @@
 import { db } from '@/db/database'
+import { remindersRepo } from '@/db/repositories/remindersRepo'
 import type {
   Task,
   WeeklyPlan,
@@ -110,6 +111,7 @@ export const planningRepo = {
   },
 
   async deleteTask(id: number): Promise<void> {
+    await remindersRepo.deleteByTaskId(id)
     await db.tasks.delete(id)
   },
 
@@ -169,6 +171,7 @@ export const planningRepo = {
 
   async deleteRecurringTasks(task: Task, scope: DeleteScope): Promise<void> {
     if (!task.seriesId) {
+      await remindersRepo.deleteByTaskId(task.id)
       await db.tasks.delete(task.id)
       return
     }
@@ -176,18 +179,26 @@ export const planningRepo = {
     const seriesId = task.seriesId
 
     if (scope === 'only') {
+      await remindersRepo.deleteByTaskId(task.id)
       await db.tasks.delete(task.id)
     } else if (scope === 'following') {
-      await db.transaction('rw', [db.tasks], async () => {
-        const toDelete = await db.tasks
+      await db.transaction('rw', [db.tasks, db.taskReminders], async () => {
+        const ids = await db.tasks
           .where('seriesId')
           .equals(seriesId)
           .filter(t => t.date >= task.date)
           .primaryKeys()
-        await db.tasks.bulkDelete(toDelete)
+        for (const id of ids) {
+          await db.taskReminders.where('taskId').equals(id).delete()
+        }
+        await db.tasks.bulkDelete(ids)
       })
     } else {
-      await db.transaction('rw', [db.tasks, db.recurringTaskSeries], async () => {
+      await db.transaction('rw', [db.tasks, db.recurringTaskSeries, db.taskReminders], async () => {
+        const ids = await db.tasks.where('seriesId').equals(seriesId).primaryKeys()
+        for (const id of ids) {
+          await db.taskReminders.where('taskId').equals(id).delete()
+        }
         await db.tasks.where('seriesId').equals(seriesId).delete()
         await db.recurringTaskSeries.delete(seriesId)
       })

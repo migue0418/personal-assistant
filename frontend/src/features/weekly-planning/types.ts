@@ -36,3 +36,14 @@ export interface RecurringTaskSeries {
 }
 
 export type DeleteScope = 'only' | 'following' | 'all'
+
+export type ReminderOffset = 10 | 60 | 1440 | 10080
+
+export interface TaskReminder {
+  id: number
+  taskId: number
+  taskTitle: string
+  scheduledAt: string
+  minutesBefore: ReminderOffset
+  fired: 0 | 1
+}

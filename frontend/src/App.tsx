@@ -3,6 +3,7 @@ import { Routes, Route, Navigate } from 'react-router-dom'
 import { lazy, Suspense } from 'react'
 import Sidebar from '@/shared/components/Sidebar'
 import CalendarPage from '@/features/weekly-planning/components/CalendarPage'
+import { useNotifications } from '@/shared/hooks/useNotifications'
 
 const ShoppingListsPage = lazy(
   () => import('@/features/shopping-list/components/ShoppingListsPage')
@@ -35,6 +36,8 @@ function Loading() {
 }
 
 export default function App() {
+  useNotifications()
+
   return (
     <>
       <Sidebar />

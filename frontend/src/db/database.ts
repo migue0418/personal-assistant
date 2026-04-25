@@ -1,5 +1,10 @@
 import Dexie, { type EntityTable } from 'dexie'
-import type { WeeklyPlan, Task, RecurringTaskSeries } from '@/features/weekly-planning/types'
+import type {
+  WeeklyPlan,
+  Task,
+  RecurringTaskSeries,
+  TaskReminder,
+} from '@/features/weekly-planning/types'
 import type { Habit, HabitLog } from '@/features/habits/types'
 import type { Recipe } from '@/features/recipes/types'
 import type { ShoppingList, ShoppingItem } from '@/features/shopping-list/types'
@@ -18,6 +23,7 @@ export const db = new Dexie('personal-assistant') as Dexie & {
   workoutSessions: EntityTable<WorkoutSession, 'id'>
   exercises: EntityTable<Exercise, 'id'>
   products: EntityTable<Product, 'id'>
+  taskReminders: EntityTable<TaskReminder, 'id'>
 }
 
 db.version(1).stores({
@@ -57,4 +63,19 @@ db.version(3).stores({
   workoutSessions: '++id, date',
   exercises: '++id, name, muscleGroup',
   products: '++id, name, category',
+})
+
+db.version(4).stores({
+  weeklyPlans: '++id, weekStart',
+  tasks: '++id, planId, date, status, seriesId',
+  recurringTaskSeries: '++id',
+  habits: '++id, name, frequency',
+  habitLogs: '++id, habitId, date',
+  recipes: '++id, name, category',
+  shoppingLists: '++id, createdAt',
+  shoppingItems: '++id, listId, category, checked, productId',
+  workoutSessions: '++id, date',
+  exercises: '++id, name, muscleGroup',
+  products: '++id, name, category',
+  taskReminders: '++id, taskId, scheduledAt, fired',
 })

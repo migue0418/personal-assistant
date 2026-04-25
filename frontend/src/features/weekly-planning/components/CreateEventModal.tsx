@@ -1,7 +1,14 @@
 import { useState, useEffect } from 'react'
 import type { FormEvent } from 'react'
 import { planningRepo } from '@/db/repositories/planningRepo'
-import type { Task, TaskCategory, RecurrenceFrequency } from '@/features/weekly-planning/types'
+import type {
+  Task,
+  TaskCategory,
+  RecurrenceFrequency,
+  ReminderOffset,
+} from '@/features/weekly-planning/types'
+import { scheduleReminders } from '@/features/weekly-planning/utils/reminderUtils'
+import ReminderPicker from '@/features/weekly-planning/components/ReminderPicker'
 
 const CATEGORIES: TaskCategory[] = ['work', 'personal', 'health', 'shopping', 'other']
 
@@ -48,6 +55,8 @@ export default function CreateEventModal({ date, planId, initialTime, onSave, on
   const [titleError, setTitleError] = useState('')
   const [timeError, setTimeError] = useState('')
   const [saving, setSaving] = useState(false)
+
+  const [reminderOffsets, setReminderOffsets] = useState<ReminderOffset[]>([])
 
   const [isRecurring, setIsRecurring] = useState(false)
   const [frequency, setFrequency] = useState<RecurrenceFrequency>('weekly')
@@ -124,7 +133,8 @@ export default function CreateEventModal({ date, planId, initialTime, onSave, on
         if (timeStart) newTask.timeStart = timeStart
         if (timeEnd) newTask.timeEnd = timeEnd
         if (category) newTask.category = category
-        await planningRepo.addTask(newTask)
+        const id = await planningRepo.addTask(newTask)
+        await scheduleReminders({ ...newTask, id }, reminderOffsets)
       }
       onSave()
     } catch {
@@ -284,6 +294,14 @@ export default function CreateEventModal({ date, planId, initialTime, onSave, on
           </div>
 
           <div className="border-t pt-4" style={{ borderColor: 'var(--color-border)' }}>
+            <ReminderPicker
+              selected={reminderOffsets}
+              hasTimeStart={timeStart.length > 0}
+              onChange={setReminderOffsets}
+            />
+          </div>
+
+          <div className="border-t pt-4" style={{ borderColor: 'var(--color-border)' }}>
             <label className="flex cursor-pointer items-center gap-3">
               <input
                 type="checkbox"
@@ -302,6 +320,9 @@ export default function CreateEventModal({ date, planId, initialTime, onSave, on
 
             {isRecurring && (
               <div className="mt-3 space-y-3 pl-1">
+                <p className="text-xs" style={{ color: 'var(--color-text-secondary)' }}>
+                  Los recordatorios no están disponibles para tareas recurrentes.
+                </p>
                 <div>
                   <label
                     htmlFor="recurrence-frequency"

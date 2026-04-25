@@ -15,7 +15,9 @@ export default tseslint.config(
       ecmaVersion: 2024,
       globals: globals.browser,
       parserOptions: {
-        projectService: true,
+        projectService: {
+          allowDefaultProject: ['src/sw.ts'],
+        },
         tsconfigRootDir: import.meta.dirname,
       },
     },
